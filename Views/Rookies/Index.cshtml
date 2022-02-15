@@ -1,0 +1,93 @@
+﻿@model List<Person>
+@{
+  ViewData["Title"] = "Member List";
+  Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+  <h1 class="display-4">Member List</h1>
+  <div class="d-flex flex-row">
+    @Html.ActionLink("Create new Member","Create","Rookies", null ,htmlAttributes : new {@class = "btn btn-primary"})
+    @* <a class="btn btn-secondary " href="@Url.ActionLink("Create","Rookies")">Create new Member</a>
+      <a class="btn btn-success" asp-action="Create" asp-controller = "Rookies">Create new Member</a> *@
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">STT</th>
+        <th scope="col">Full Name</th>
+        <th scope="col">Gender</th>
+        <th scope="col">Age</th>
+        <th scope="col">Birth Place</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      @if (Model != null)
+      {
+        @for (var i = 1; i <= Model.Count; i++)
+        {
+          var person = Model[i - 1];
+          <tr>
+            <th scope="row">@person.Id</th>
+            <td>@person.FullName</td>
+            <td>@person.Gender</td>
+            <td>@person.Age</td>
+            <td>@person.BirthPlace</td>
+            <td>
+
+              <a class="btn btn-success btn-sa" asp-action="Edit" asp-controller="Rookies" asp-route-index="@i">Edit</a>
+              <a class="btn btn-danger btn-sa" data-toggle="modal" data-target="#exampleModal" asp-controller="Rookies"
+                        asp-route-index="@i">Delete</a>
+              <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      Are you sure you want to delete this item?
+                    </div>
+                    <div class="modal-footer">
+                      <input type="hidden" asp-for="Index"/>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <a class="btn btn-danger btn-sa" asp-action="Delete" >Delete</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        }
+      }
+    </tbody>
+  </table>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this item?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a class="btn btn-danger btn-sa">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
